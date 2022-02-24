@@ -49,13 +49,19 @@
             return $this->db->query($query, $values);
         }
 
+
+   
         /*
         DOCU: This function removes a product form the database
         */
         public function remove_product($product_id)
-        {
-            $query = "DELETE FROM products WHERE id = ?";
+        {   
             $values = array($product_id);
+
+            $query = "DELETE comments FROM comments INNER JOIN messages ON comments.message_id = messages.id WHERE messages.product_id = ?";
+            $this->db->query($query, $values );
+
+            $query = "DELETE FROM products WHERE id = ?";
             return $this->db->query($query, $values);
         }
 
