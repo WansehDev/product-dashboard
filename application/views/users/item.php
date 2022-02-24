@@ -1,3 +1,13 @@
+<?php
+    if($this->session->userdata('is_logged_in') != null && $this->session->userdata('is_logged_in') == true)
+    {
+        $is_admin = $this->session->userdata('is_admin');
+    }
+    else 
+    {
+        redirect('/');
+    }
+?>
 <div class="container item-dashboard">
     <h2 class="title-container">V88 T-shirt</h2>
     <p>Added since: December 20th 2021</p>

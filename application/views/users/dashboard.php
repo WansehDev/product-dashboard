@@ -1,3 +1,13 @@
+<?php
+    if($this->session->userdata('is_logged_in') != null && $this->session->userdata('is_logged_in') == true)
+    {
+        $is_admin = $this->session->userdata('is_admin');
+    }
+    else 
+    {
+        redirect('/');
+    }
+?>
 <div class="container dashboard">
     <h1>All Products</h1>
     <table>

@@ -1,3 +1,13 @@
+<?php
+    if($this->session->userdata('is_logged_in') != null && $this->session->userdata('is_logged_in') == true)
+    {
+        $is_admin = $this->session->userdata('is_admin');
+    }
+    else 
+    {
+        redirect('/');
+    }
+?>
 <div class="container profile">
     <h2 class="title-container">Edit Profile</h2>
     <div>

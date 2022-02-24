@@ -118,7 +118,9 @@
                 {
                     $userdata = array(
                         'user_id'=>$user['id'], 
-                        'first_name'=>$user['first_name']
+                        'first_name'=>$user['first_name'],
+                        'is_admin'=>$user['is_admin'],
+                        'is_logged_in'=>true
                     );
                     $this->session->set_userdata($userdata);
 

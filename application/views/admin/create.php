@@ -1,8 +1,19 @@
+<?php
+    if(($this->session->userdata('is_logged_in') != null && $this->session->userdata('is_logged_in') == true) && $this->session->userdata('is_admin') != 0) 
+    {
+        $is_admin = $this->session->userdata('is_admin');
+    }
+    else 
+    {
+        redirect('/');
+    }
+?>
+
 <div class="container admin-dashboard">
     <div class="heading-content">
         <h1>Add a new Product</h1>
         <div>
-            <a href="#">Return to dashboard</a>
+            <a href="admin_dashboard">Return to dashboard</a>
         </div>
     </div>
     <form class="form-info" action="">
