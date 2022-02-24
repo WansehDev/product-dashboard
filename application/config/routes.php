@@ -65,7 +65,9 @@ $route['dashboard'] = 'users/dashboard';
 /* USER(NONADMIN) DASHBOARD ROUTE */
 $route['admin_dashboard'] = 'users/admin_dashboard';
 $route['create'] = 'admins/create';
-$route['edit'] = 'admins/edit';
+$route['products/edit/(:any)'] = 'admins/edit/$1';
+$route['products/remove/(:any)'] = 'admins/confirm_delete/$1';
+$route['products/save/(:any)'] = 'admins/update/$1';
 
 /* ALL USER PROFILE ROUTE (FOR ADMIN GIVE IT A ID)*/
 $route['profile'] = 'users/profile';
@@ -74,11 +76,11 @@ $route['profile'] = 'users/profile';
 /* USER ITEM ROUTE */
 $route['item'] = 'users/item';
 
-
-
-
 /* USER LOGOUT ROUTE */
 $route['logout'] = 'users/logout';
+
+/* PRODUCT ROUTES */
+$route['product/validate'] = 'admins/process_product';
 
 
 $route['404_override'] = '';

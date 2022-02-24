@@ -77,7 +77,7 @@
         /*  
         DOCU: This function contains simple condition to match database record and user input in password.
         */
-        function validate_signin_match($user, $password) 
+        public function validate_signin_match($user, $password) 
         {
             $hash_password = $this->security->xss_clean($password);
             if($user && $user['password'] == $this->encrypt_password($hash_password, $user['salt'])) 
@@ -93,7 +93,7 @@
         /*  
         DOCU: This function checks required input fields and if unique email.
         */
-        function validate_registration($email) 
+        public function validate_registration($email) 
         {
             $this->form_validation->set_error_delimiters("<p class='error'>",'</p>');
 
@@ -108,9 +108,10 @@
             if(!$this->form_validation->run()) {
                 return validation_errors();
             }
-            // else if($this->get_user_by_email($email)) {
-            //     return "Email already taken.";
-            // }
+            else if($this->get_user_by_email($email)) 
+            {
+                return "Email already taken.";
+            }
         }
 
 
@@ -121,9 +122,5 @@
             return md5($pass. '' . $salt);
         }
 
-        private function xss_clean_data($data) 
-        {
-            return $this->security->xss_clean($data);
-        }
     }
 ?>

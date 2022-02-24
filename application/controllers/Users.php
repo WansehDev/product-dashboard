@@ -76,6 +76,7 @@
         */
         public function dashboard()
         {
+
             $this->load->view('templates/header');
             $this->load->view('templates/navlogout');
             $this->load->view('users/dashboard');
@@ -87,12 +88,12 @@
         */
         public function admin_dashboard()
         {
+            $data['products']= $this->product->get_products_by_user($this->session->userdata('user_id'));
+
             $this->load->view('templates/header');
             $this->load->view('templates/navlogout');
-            $this->load->view('admin/dashboard');
+            $this->load->view('admin/dashboard', $data);
         }
-
-
 
         /*  
         DOCU: This function is triggered when the sign in button is clicked. 

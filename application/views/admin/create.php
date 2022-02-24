@@ -16,12 +16,12 @@
             <a href="admin_dashboard">Return to dashboard</a>
         </div>
     </div>
-    <form class="form-info" action="">
+    <form class="form-info" action="product/validate" method="post">
         <label for="product_name">Name:</label>
         <input type="text" name="product_name">
 
         <label for="product_description">Description: </label>
-        <textarea name="product_description" id="" cols="30" rows="10"></textarea>
+        <textarea name="product_description" id="" cols="120" rows="10"></textarea>
 
         <label for="prodcut_price">Price: </label>
         <input type="text" name="product_price">
@@ -34,7 +34,8 @@
                 <button class="down" type="button">▼</button>
             </div>
         </div>
-        
+        <p><?= $this->session->flashdata('input_errors'); ?></p>
+        <p><?= $this->session->flashdata('success'); ?></p>
         <input type="submit" value="Create">
     </form>
 </div>
