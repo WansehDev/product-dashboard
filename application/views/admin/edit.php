@@ -10,7 +10,7 @@
 ?>
 <div class="container admin-dashboard">
     <div class="heading-content">
-        <h1>Edit A Product #[PRODUCT # HERE]</h1>
+        <h2 class="title-container">Edit A Product #[PRODUCT # HERE]</h2>
         <div>
             <a href="admin_dashboard">Return to dashboard</a>
         </div>

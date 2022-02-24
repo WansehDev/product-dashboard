@@ -1,10 +1,10 @@
 --><div class="account-area">
-        <p>Login</p>
+        <p>Register</p>
     </div>
 </nav>
 
 <div class="container login">
-    <h1>Register</h1>
+    <h2 class="title-container">Register</h2>
     <form class="form-info" action="register/validate" method="post">
 
         <label for="email">Email Address:</label>
@@ -22,7 +22,7 @@
         <label for="confirm_password">Confirm Password</label>
         <input type="password" name="confirm_password">
 
-        <div>
+        <div class="choice-container">
             <p><?= $this->session->flashdata('input_errors'); ?></p>
             <input type="submit" value="Register">
             <a href="login">Already have an account? Login</a>

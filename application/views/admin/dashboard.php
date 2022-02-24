@@ -10,7 +10,7 @@
 ?>
 <div class="container dashboard">
     <div class="heading-content">
-        <h1>Manage Products</h1>
+        <h2 class="title-container">Manage Products</h2>
         <div>
             <a href="create">Create New Product</a>
         </div>

@@ -9,7 +9,7 @@
     }
 ?>
 <div class="container dashboard">
-    <h1>All Products</h1>
+    <h2 class="title-container">All Products</h2>
     <table>
         <thead>
             <tr>

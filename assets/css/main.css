@@ -89,7 +89,7 @@ nav > ul {
     padding: 2px;
 }
 
-.form-info > div {
+.form-info > .choice-container {
     width: 100%;
     text-align: center;
 }
@@ -113,7 +113,7 @@ nav > ul {
 .account-area {
     display: inline-block;
     vertical-align: middle;
-    width: calc(100% - 400px);
+    width: calc(100% - 450px);
     text-align: right;
 }
 
