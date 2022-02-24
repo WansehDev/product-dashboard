@@ -26,10 +26,12 @@
         <input type="text" name="product_price">
 
         <label for="product_inventory">Inventory Count: </label>
-        <input class="quantity-selector" name="product_inventory" type="text"  value="0" readonly>
-        <div class="quantity-option">
-            <button class="up" type="button">▲</button>
-            <button class="down" type="button">▼</button>
+        <div class="qty-area">
+            <input class="quantity-selector" name="product_inventory" type="text"  value="0" readonly>
+            <div class="quantity-option">
+                <button class="up" type="button">▲</button>
+                <button class="down" type="button">▼</button>
+            </div>
         </div>
         <input type="submit" value="Save">
     </form>

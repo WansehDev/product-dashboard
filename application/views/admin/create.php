@@ -27,7 +27,7 @@
         <input type="text" name="product_price">
 
         <label for="product_inventory">Inventory Count: </label>
-        <div class="qty-are">
+        <div class="qty-area">
             <input class="quantity-selector" name="product_inventory" type="text"  value="0" readonly>
             <div class="quantity-option">
                 <button class="up" type="button">▲</button>
