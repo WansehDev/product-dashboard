@@ -6,31 +6,12 @@
         */
         public function index() 
         {
-            $current_user_id = $this->session->userdata('user_id');
-            
-            if(!$current_user_id) { 
-                $this->load->view('templates/header');
-                $this->load->view('templates/navlogin');
-                $this->load->view('users/login');
-            } 
-           
+   
+            $this->load->view('templates/header');
+            $this->load->view('templates/navlogin');
+            $this->load->view('users/login');
+        
         }
-
-         /*  
-         DOCU: This function is triggered by default which displays the log in/product page. 
-         */
-        public function login() 
-        {
-             $current_user_id = $this->session->userdata('user_id');
-             
-             if(!$current_user_id) { 
-                 $this->load->view('templates/header');
-                 $this->load->view('templates/navlogin');
-                 $this->load->view('users/login');
-             } 
-            
-        }
-
          /*
          DOCU: This function is triggered when the user click logout
          */
@@ -76,10 +57,10 @@
         */
         public function dashboard()
         {
-
+            $data['products']= $this->product->get_all_products();
             $this->load->view('templates/header');
             $this->load->view('templates/navlogout');
-            $this->load->view('users/dashboard');
+            $this->load->view('users/dashboard', $data);
         }
 
              /*  
@@ -89,7 +70,6 @@
         public function admin_dashboard()
         {
             $data['products']= $this->product->get_products_by_user($this->session->userdata('user_id'));
-
             $this->load->view('templates/header');
             $this->load->view('templates/navlogout');
             $this->load->view('admin/dashboard', $data);

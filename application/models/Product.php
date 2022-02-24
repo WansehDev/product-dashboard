@@ -1,6 +1,16 @@
 <?php
     class Product extends CI_Model
     {
+        /* 
+        DOCU: Gets all the products 
+        */
+        public function get_all_products()
+        {
+            $query = "SELECT * FROM products";
+            return $this->db->query($query)->result_array();
+        }
+
+
          /* 
         DOCU: Gets all the products by the supplied user id.
         */

@@ -20,24 +20,19 @@
             </tr>
         </thead>
         <tbody>
+<?php
+        foreach($products as $product)
+        {
+?>
             <tr>
-                <td>1</td>
-                <td><a href="item">Product 1</a></td>
-                <td>10</td>
-                <td>5</td>
+                <td><?= $product['id']; ?></td>
+                <td><a href="item"><?= $product['product_name']; ?></a></td>
+                <td><?= $product['product_inventory']; ?></td>
+                <td><?= $product['product_qty_sold']; ?></td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>Product 2</td>
-                <td>10</td>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Product 3</td>
-                <td>10</td>
-                <td>5</td>
-            </tr>
+<?php
+        }
+?>
     </table>
 
 </div>
