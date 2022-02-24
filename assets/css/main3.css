@@ -1,4 +1,9 @@
 /* ITEM DASHBOARD CSS AND PROFILE CSS */
+span {
+    font-weight: bold;
+}
+
+
 .item-dashboard {
     box-shadow: 0 0 0 1px rgba(0,0,0,.05),0 4px 6px 0 rgba(0,0,0,.1),0 8px 24px 0 rgba(0,0,0,.2);
     padding: 20px;

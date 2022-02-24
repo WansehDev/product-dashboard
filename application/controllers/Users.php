@@ -6,12 +6,11 @@
         */
         public function index() 
         {
-   
             $this->load->view('templates/header');
             $this->load->view('templates/navlogin');
             $this->load->view('users/login');
-        
         }
+        
          /*
          DOCU: This function is triggered when the user click logout
          */
@@ -34,21 +33,79 @@
         /*  
         DOCU: This function is triggered when the user clicks the profile 
         */
-        public function profile($id = null)
+        public function profile()
         {
+            $data['user_profile'] = $this->user->get_user_info($this->session->userdata('user_id'));
             $this->load->view('templates/header');
             $this->load->view('templates/navlogout');
-            $this->load->view('users/profile');
+            $this->load->view('users/profile', $data);
         }
+
+        public function update_profile()
+        {
+            $result = $this->user->validate_updated_profile();
+
+            if($result != 'success')
+            {
+                $this->session->set_flashdata('input_errors', $result);
+                redirect('/profile');
+            }
+            else
+            {
+                if($this->user->update_profile($this->input->post()))
+                {
+                    $this->session->set_flashdata('success', 'Profile updated successfully');
+                    redirect('/profile');
+                }
+            }
+        }
+
+        public function update_password_profile()
+        {
+            $result = $this->user->validate_updated_password();
+            if($result != 'success')
+            {
+                $this->session->set_flashdata('input_errors', $result);
+                redirect('/profile');
+            }
+            else
+            {
+                if($this->user->update_password($this->input->post()) != FALSE)
+                {
+                    $this->session->set_flashdata('success', 'Profile updated successfully');
+                    redirect('/profile');
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'Old Password does not match with new password');
+                    redirect('/profile');
+                }
+            }
+        }
+
+
 
          /*  
          DOCU: This function is triggered when the user clicks the product. 
          */
-        public function item()
+        public function item($product_id)
         {
+            $user_posts = $this->message->get_messages($product_id);
+            $replies = array();
+            foreach($user_posts as $user_post) 
+            {
+                $comments = $this->comment->get_comments_from_message_id($user_post['post_id']); 
+            
+                $replies[] = $comments;
+                
+            }
+            
+            $data['posts'] = $user_posts;
+            $data['comments'] = $replies;
+            $data['products'] = $this->product->get_product_info($product_id);
             $this->load->view('templates/header');
             $this->load->view('templates/navlogout');
-            $this->load->view('users/item');
+            $this->load->view('users/item', $data);
         }
 
         /*  
@@ -57,7 +114,7 @@
         */
         public function dashboard()
         {
-            $data['products']= $this->product->get_all_products();
+            $data['products'] = $this->product->get_all_products();
             $this->load->view('templates/header');
             $this->load->view('templates/navlogout');
             $this->load->view('users/dashboard', $data);
@@ -106,13 +163,13 @@
                     $this->session->set_userdata($userdata);
 
                     // Check whether the user is admin or not
-                    $user['is_admin'] == 1 ? redirect('admin_dashboard') : redirect('dashboard');
+                    $user['is_admin'] == 1 ? redirect('/admin_dashboard') : redirect('/dashboard');
                    
                 }
                 else 
                 {
                     $this->session->set_flashdata('input_errors', $result);
-                    redirect("login");
+                    redirect("/");
                 }
             }
         }
@@ -130,7 +187,7 @@
             if($result!=null)
             {
                 $this->session->set_flashdata('input_errors', $result);
-                redirect("register");
+                redirect("/register");
             }
             else
             {
@@ -140,12 +197,52 @@
                 $new_user = $this->user->get_user_by_email($form_data['email']);
                 $userdata = array(
                     'user_id'=>$new_user['id'], 
-                    'first_name'=>$new_user['first_name']
+                    'first_name'=>$new_user['first_name'],
+                    'is_logged_in'=>true
                 );
                 
                 $this->session->set_userdata($userdata);
-                redirect('dashboard');
+                redirect('/dashboard');
             }
+        }
+
+          /*  
+        DOCU: This function is responsible to validate and add the message from any user to the database.
+        */
+        public function add_post($product_id) 
+        {
+            $result = $this->message->validate_post();
+            
+            if($result != 'success') {
+                $this->session->set_flashdata('input_errors', $result);
+            } 
+            else {
+                $this->message->add_post(
+                    $this->input->post('review'), 
+                    $product_id
+                );
+            }
+        
+            redirect("products/show/".$product_id);
+        }
+
+        /*  
+        DOCU: This function is responsible to validate and add the comment from any user to the database.
+        */
+        public function add_comment($product_id) 
+        {
+            $result = $this->comment->validate_comment();
+
+            if($result != 'success') {
+                $this->session->set_flashdata('input_errors', validation_errors());
+            }
+            else {
+                $this->comment->add_comment(
+                    $this->input->post(), 
+                );
+            }
+
+            redirect("products/show/".$product_id);;
         }
     }
 ?>

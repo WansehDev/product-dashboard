@@ -1,6 +1,15 @@
 <?php
     class User extends CI_Model
     {
+        /*  
+        DOCU: This function retrieves user information.
+        */ 
+        public function get_user_info($user_id)
+        {
+            $query = "SELECT * FROM users WHERE id = ?";
+            $values = array($user_id);
+            return $this->db->query($query, $values)->result_array()[0];
+        }
 
         /*  
         DOCU: This function retrieves user information filtered by email.
@@ -52,7 +61,48 @@
         }
 
 
+        public function update_profile($post)
+        {
+            $query = "UPDATE users SET first_name = ?, last_name = ?, email = ? WHERE id = ?";
+            $values = array(
+                $this->security->xss_clean($post['first_name']),
+                $this->security->xss_clean($post['last_name']),
+                $this->security->xss_clean($post['email']),
+                $this->session->userdata('user_id')
+            );
 
+            return $this->db->query($query, $values);
+        }
+
+        public function get_old_password()
+        {
+            $query = "SELECT salt, password FROM users WHERE id = ?";
+            $values = array($this->session->userdata('user_id'));
+            return $this->db->query($query, $values)->result_array()[0];
+        }
+
+        public function update_password($post)
+        {
+            $user_info = $this->get_old_password();
+            if($this->encrypt_password($post['old_password'], $user_info['salt']) == $user_info['password'])
+            {
+                $salt = bin2hex(openssl_random_pseudo_bytes(22));
+                $hash_password = $this->encrypt_password($post['new_password'], $salt);
+
+                $query = "UPDATE users SET salt = ?, password = ? WHERE id = ?";
+                $values = array(
+                    $this->security->xss_clean($salt),
+                    $this->security->xss_clean($hash_password),
+                    $this->session->userdata('user_id')
+                );
+
+                return $this->db->query($query, $values);
+            }
+            else
+            {
+                return FALSE;
+            }
+        }       
 
         /*  
         DOCU: This function checks if all required fields were filled up. 
@@ -74,6 +124,7 @@
                 return "success";
             }
         }
+        
         /*  
         DOCU: This function contains simple condition to match database record and user input in password.
         */
@@ -101,6 +152,8 @@
 
             $this->form_validation->set_rules('last_name', 'Last Name', 'required|min_length[3]'); 
 
+            $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+
             $this->form_validation->set_rules('password', 'Password', 'required|min_length[8]');
 
             $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[password]');
@@ -114,7 +167,49 @@
             }
         }
 
+        public function validate_updated_profile()
+        {
+            $this->form_validation->set_error_delimiters("<p class='error'>",'</p>');
 
+            $this->form_validation->set_rules('first_name', 'First Name', 'required|min_length[3]');
+
+            $this->form_validation->set_rules('last_name', 'Last Name', 'required|min_length[3]'); 
+
+            $this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+
+ 
+            if(!$this->form_validation->run()) {
+                return validation_errors();
+            }
+            else
+            {
+                return "success";
+            }
+        }
+
+        //valdiate passwords
+        public function validate_updated_password()
+        {
+            $this->form_validation->set_error_delimiters("<p class='
+            error'>",'</p>');
+
+            $this->form_validation->set_rules('old_password', 'Old Password', 'required|min_length[8]');
+
+            $this->form_validation->set_rules('new_password', 'Password', 'required|min_length[8]');
+
+            $this->form_validation->set_rules('confirm_password', 'Confirm Password', 'required|matches[new_password]');
+
+            if(!$this->form_validation->run()) {
+                return validation_errors();
+            }
+            else
+            {
+                return "success";
+            }
+        }
+       
+
+       
         /* Utility Functions */
 
         private function encrypt_password($pass, $salt) 

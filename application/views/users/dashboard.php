@@ -26,7 +26,7 @@
 ?>
             <tr>
                 <td><?= $product['id']; ?></td>
-                <td><a href="item"><?= $product['product_name']; ?></a></td>
+                <td><a href=<?= "products/show/".$product['id']; ?>><?= $product['product_name']; ?></a></td>
                 <td><?= $product['product_inventory']; ?></td>
                 <td><?= $product['product_qty_sold']; ?></td>
             </tr>

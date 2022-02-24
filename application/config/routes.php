@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'users';
 
 /* USER LOGIN ROUTE */
-$route['login'] = 'users/login';
+$route['login'] = '/';
 $route['users/validate'] = 'users/process_login';
 
 /* USER REGISTER ROUTE */
@@ -62,19 +62,23 @@ $route['register/validate'] = 'users/process_register';
 /* USER(NONADMIN) DASHBOARD ROUTE */
 $route['dashboard'] = 'users/dashboard';
 
-/* USER(NONADMIN) DASHBOARD ROUTE */
+/* USER(ADMIN) DASHBOARD ROUTE */
 $route['admin_dashboard'] = 'users/admin_dashboard';
 $route['create'] = 'admins/create';
 $route['products/edit/(:any)'] = 'admins/edit/$1';
 $route['products/remove/(:any)'] = 'admins/confirm_delete/$1';
 $route['products/save/(:any)'] = 'admins/update/$1';
 
-/* ALL USER PROFILE ROUTE (FOR ADMIN GIVE IT A ID)*/
+/* ALL USER PROFILE ROUTE */
 $route['profile'] = 'users/profile';
+$route['profile/edit'] = 'users/update_profile';
+$route['profile/password'] = 'users/update_password_profile';
 
 
 /* USER ITEM ROUTE */
-$route['item'] = 'users/item';
+$route['products/show/(:any)'] = 'users/item/$1';
+$route['products/add/(:any)'] = 'users/add_post/$1';
+$route['products/comments/(:any)'] = 'users/add_comment/$1';
 
 /* USER LOGOUT ROUTE */
 $route['logout'] = 'users/logout';

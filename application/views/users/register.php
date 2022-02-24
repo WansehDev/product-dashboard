@@ -5,7 +5,7 @@
 
 <div class="container login">
     <h2 class="title-container">Register</h2>
-    <form class="form-info" action="register/validate" method="post">
+    <form class="form-info" action="/register/validate" method="post">
 
         <label for="email">Email Address:</label>
         <input type="text" name="email">
@@ -25,7 +25,7 @@
         <div class="choice-container">
             <p><?= $this->session->flashdata('input_errors'); ?></p>
             <input type="submit" value="Register">
-            <a href="login">Already have an account? Login</a>
+            <a href="/">Already have an account? Login</a>
         </div>
     </form>
 </div>
