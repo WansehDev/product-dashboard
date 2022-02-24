@@ -12,7 +12,7 @@
         <tbody>
             <tr>
                 <td>1</td>
-                <td>Product 1</td>
+                <td><a href="item">Product 1</a></td>
                 <td>10</td>
                 <td>5</td>
             </tr>

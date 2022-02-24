@@ -2,7 +2,7 @@
     <div class="heading-content">
         <h1>Manage Products</h1>
         <div>
-            <a href="#">Create New Product</a>
+            <a href="create">Create New Product</a>
         </div>
     </div>
     <table>
@@ -18,11 +18,11 @@
         <tbody>
             <tr>
                 <td>1</td>
-                <td>Product 1</td>
+                <td><a href="item">Product 1</a></td>
                 <td>10</td>
                 <td>5</td>
                 <td>
-                    <a href="#">Edit</a>
+                    <a href="edit">Edit</a>
                     <a href="#">Remove</a>
                 </td>
             </tr>

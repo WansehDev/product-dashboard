@@ -50,5 +50,36 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 $route['default_controller'] = 'users';
+
+/* USER LOGIN ROUTE */
+$route['login'] = 'users/login';
+$route['users/validate'] = 'users/process_login';
+
+/* USER REGISTER ROUTE */
+$route['register'] = 'users/register';
+$route['register/validate'] = 'users/process_register';
+
+/* USER(NONADMIN) DASHBOARD ROUTE */
+$route['dashboard'] = 'users/dashboard';
+
+/* USER(NONADMIN) DASHBOARD ROUTE */
+$route['admin_dashboard'] = 'users/admin_dashboard';
+$route['create'] = 'admins/create';
+$route['edit'] = 'admins/edit';
+
+/* ALL USER PROFILE ROUTE (FOR ADMIN GIVE IT A ID)*/
+$route['profile'] = 'users/profile';
+
+
+/* USER ITEM ROUTE */
+$route['item'] = 'users/item';
+
+
+
+
+/* USER LOGOUT ROUTE */
+$route['logout'] = 'users/logout';
+
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

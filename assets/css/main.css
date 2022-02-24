@@ -117,7 +117,7 @@ nav > ul {
     text-align: right;
 }
 
-.account-area > a {
+.account-area > p {
     font-size: 2em;
 }
 
@@ -143,4 +143,8 @@ nav > ul {
     width: calc(100% - 70px);
 }
 
+.error {
+    color:red;
+    text-align: left;
+}
 
