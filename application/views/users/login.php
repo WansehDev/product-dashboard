@@ -2,7 +2,7 @@
         <p>Register</p>
     </div>
 </nav>
-<!-- DELETE VALUE 1 LATER -->
+
 <div class="container login">
     <h1>Login</h1>
     <form class="form-info" action="users/validate" method="post">

@@ -28,11 +28,21 @@
                       VALUES 
                         (?,?,?,?,?,?)";
 
+            // The first person is registered automatically as an admin
+            if($this->db->query("SELECT * FROM users")->row_array() == null)
+            {
+                $user_level = 1;
+            }
+            else
+            {
+                $user_level = 0;
+            }
+
             $values = array(
                 $this->security->xss_clean($user['first_name']), 
                 $this->security->xss_clean($user['last_name']), 
                 $this->security->xss_clean($user['email']),
-                0,  
+                $user_level,  
                 $this->security->xss_clean($salt),
                 $this->security->xss_clean($hash_password),
 
