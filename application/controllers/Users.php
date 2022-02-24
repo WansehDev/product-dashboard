@@ -100,50 +100,38 @@
         */
         public function process_login()
         {
-            $result = 'success';
-            // $result = $this->user->validate_login_form(); UNCOMMENT LATER
+            $result = $this->user->validate_login_form();
+
             if($result != 'success')
             {
                 $this->session->set_flashdata('input_errors', $result);
-
                 redirect('login');
             }
             else
             {
                 $email = $this->input->post('email');
-                // $user = $this->user->get_user_by_email($email);
+                $user = $this->user->get_user_by_email($email);
                 
-                // $result = $this->user->validate_signin_match($user, $this->input->post('password'));
+                $result = $this->user->validate_signin_match($user, $this->input->post('password'));
 
-                // if($result == "success") 
-                // {
-                //     $userdata = array(
-                //         'user_id'=>$user['id'], 
-                //         'first_name'=>$user['first_name']
-                //     );
-                //     $this->session->set_userdata($userdata);
-
-                //     redirect("dashboard");
-                // }
-                // else 
-                // {
-                //     $this->session->set_flashdata('input_errors', $result);
-                //     redirect("signin");
-                // }
-
-                // DELETE LATER
-                $is_admin = TRUE;
-                if($email == '2')
+                if($result == "success") 
                 {
-                    redirect('dashboard');
-                }
-                else if($email == '1' && $is_admin)
-                {
-                    redirect('admin_dashboard');
-                }
+                    $userdata = array(
+                        'user_id'=>$user['id'], 
+                        'first_name'=>$user['first_name']
+                    );
+                    $this->session->set_userdata($userdata);
 
+                    // Check whether the user is admin or not
+                    $user['is_admin'] == 1 ? redirect('admin_dashboard') : redirect('dashboard');
+                   
+                }
+                else 
+                {
+                    $this->session->set_flashdata('input_errors', $result);
+                    redirect("login");
+                }
             }
-            // redirect('login'); //delete later
         }
 
         /* 
@@ -163,17 +151,18 @@
             }
             else
             {
-                // $form_data = $this->input->post();
-                // $this->user->create_user($form_data);
-    
-                // $new_user = $this->user->get_user_by_email($form_data['email']);
-                // $this->session->set_userdata(array('user_id' => $new_user["id"], 'first_name'=>$new_user['first_name']));
+                $form_data = $this->input->post();
+                $this->user->create_user($form_data);
+
+                $new_user = $this->user->get_user_by_email($form_data['email']);
+                $userdata = array(
+                    'user_id'=>$new_user['id'], 
+                    'first_name'=>$new_user['first_name']
+                );
                 
-                // redirect('dashboard');
+                $this->session->set_userdata($userdata);
+                redirect('dashboard');
             }
-            redirect('register'); //delete later
         }
-
-
     }
 ?>

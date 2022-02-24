@@ -1,6 +1,49 @@
 <?php
     class User extends CI_Model
     {
+
+        /*  
+        DOCU: This function retrieves user information filtered by email.
+        */
+        function get_user_by_email($email)
+        { 
+            $query = "SELECT * FROM 
+                        users 
+                      WHERE 
+                        email = ?";
+
+            return $this->db->query($query, $this->security->xss_clean($email))->result_array()[0];
+        }
+
+        /* 
+        DOCU: This function inserts new user info upon registration.
+        */
+        function create_user($user)
+        {
+            $salt = bin2hex(openssl_random_pseudo_bytes(22));
+            $hash_password = $this->encrypt_password($user['password'], $salt);
+
+            $query = "INSERT INTO 
+                        users (first_name, last_name, email, is_admin, salt, password) 
+                      VALUES 
+                        (?,?,?,?,?,?)";
+
+            $values = array(
+                $this->security->xss_clean($user['first_name']), 
+                $this->security->xss_clean($user['last_name']), 
+                $this->security->xss_clean($user['email']),
+                0,  
+                $this->security->xss_clean($salt),
+                $this->security->xss_clean($hash_password),
+
+            ); 
+
+            return $this->db->query($query, $values);
+        }
+
+
+
+
         /*  
         DOCU: This function checks if all required fields were filled up. 
         */
@@ -27,8 +70,8 @@
         function validate_signin_match($user, $password) 
         {
             $hash_password = $this->security->xss_clean($password);
-    
-            if($user && $user['password'] == md5($hash_password)) {
+            if($user && $user['password'] == $this->encrypt_password($hash_password, $user['salt'])) 
+            {
                 return "success";
             }
             else 
@@ -58,6 +101,19 @@
             // else if($this->get_user_by_email($email)) {
             //     return "Email already taken.";
             // }
+        }
+
+
+        /* Utility Functions */
+
+        private function encrypt_password($pass, $salt) 
+        {
+            return md5($pass. '' . $salt);
+        }
+
+        private function xss_clean_data($data) 
+        {
+            return $this->security->xss_clean($data);
         }
     }
 ?>
