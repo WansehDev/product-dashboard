@@ -155,3 +155,13 @@ span {
     font-size: 20px;
     width: 20%;
 }
+
+.owner-post {
+    display: inline-block;
+}
+
+.time-ago {
+    display: inline-block;
+    position: absolute;
+    left: 1400px;
+}

@@ -35,7 +35,10 @@ if($posts != null)
 ?>
     <!-- POSTED REVIEWS -->
     <div class="posted-section">
-        <h4><?= $post['message_sender_name'] ?> wrote:</h4>
+        <h4 class="owner-post"><?= $post['message_sender_name'] ?> wrote:</h4>
+        <div class="time-ago">
+            <p><?= $post['post_date']; ?></p>
+        </div>
         <p><?= $post['post_content']; ?></p>
 <?php
         foreach($comments as $user_comments)
@@ -46,7 +49,10 @@ if($posts != null)
                 {
 ?>
         <div class="comments-section">
-            <h5><?= $comment['comment_sender_name']; ?> wrote:</h5>
+            <h5 class="owner-post"><?= $comment['comment_sender_name']; ?> wrote:</h5>
+            <div class="time-ago">
+                <p><?= $comment['comment_date']; ?></p>
+            </div>
             <p><?= $comment['comment_content']; ?></p>
         </div>
 <?php       

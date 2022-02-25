@@ -92,13 +92,19 @@
         {
             $user_posts = $this->message->get_messages($product_id);
             $replies = array();
-            foreach($user_posts as $user_post) 
+            foreach($user_posts as &$user_post) 
             {
                 $comments = $this->comment->get_comments_from_message_id($user_post['post_id']); 
-            
-                $replies[] = $comments;
-                
+
+                foreach($comments as &$comment)
+                {
+                    $comment['comment_date'] = $this->getDateTimeDiff( $comment['comment_date']);
+                 }
+                $replies[] = $comments;  
+                $user_post['post_date'] = $this->getDateTimeDiff($user_post['post_date']);
             }
+
+         
             
             $data['posts'] = $user_posts;
             $data['comments'] = $replies;
@@ -107,6 +113,9 @@
             $this->load->view('templates/navlogout');
             $this->load->view('users/item', $data);
         }
+
+
+    
 
         /*  
         DOCU: This function is triggered when a non admin
@@ -244,5 +253,33 @@
 
             redirect("products/show/".$product_id);;
         }
+
+
+
+        // Utility Function
+        public function getDateTimeDiff($date){
+            $now_timestamp = strtotime(date('Y-m-d H:i:s'));
+            $diff_timestamp = $now_timestamp - strtotime($date);
+            
+            if($diff_timestamp < 60){
+             return 'few seconds ago';
+            }
+            else if($diff_timestamp>=60 && $diff_timestamp<3600){
+             return round($diff_timestamp/60).' mins ago';
+            }
+            else if($diff_timestamp>=3600 && $diff_timestamp<86400){
+             return round($diff_timestamp/3600).' hours ago';
+            }
+            else if($diff_timestamp>=86400 && $diff_timestamp<(86400*30)){
+             return round($diff_timestamp/(86400)).' days ago';
+            }
+            else if($diff_timestamp>=(86400*30) && $diff_timestamp<(86400*365)){
+             return round($diff_timestamp/(86400*30)).' months ago';
+            }
+            else{
+             return round($diff_timestamp/(86400*365)).' years ago';
+            }
+        }
+
     }
 ?>
